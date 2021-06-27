@@ -36,9 +36,9 @@ sellers = {
 def homepage():
     return render_template('home.html')
 
-#@app.route("/home")
-#def test():
-#    return render_template("home1.html")
+@app.route("/home")
+def test():
+    return redirect("/")
     
 @app.route("/about")
 def about():
