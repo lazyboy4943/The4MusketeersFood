@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Listings</title>
-</head>
-<body>
-    {% for listing in listings %}
-        <div>
-            {% for key in listing %}
-                {{key}}: {{listing[key]}}
-                <br>
-            {% endfor %}
-        </div>
-        <br>
-        <br>
-    {% endfor %}
-</body>
-</html>
+{% extends "layout.html" %}
 
+{% block title %}
+    Food listings
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        {% for listing in listings %}
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/static/img/food.jpg" class="img-fluid rounded-start" alt="Food">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-text">Food item</h4>
+                            <p class="card-text">Seller name: {{ listing["name"] }}</p>
+                            <p class="card-text">Location: </p> 
+                            <p class="card-text">Bio: </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <title>About</title>
-</head>
-<body>
-    <h1>This is the about page</h1>
-    <p>Made for a hackathon by:</p>
+{% extends "layout.html" %}
+
+{% block title %}
+    About 
+{% endblock %}
+
+{% block main %}
+    <h1 style="font-weight: bold; color: #225fdd">Creators of <span style="color: red;">SG</span><span style="color: black;">Food</span></h1>
     {% for name in names %}
-        <p style="display: inline;">{{ name }},</p>
+        <b><p style="color: #ee22ee;">{{ name }}</p></b>
     {% endfor %}
-</body>
-</html>
+    <h3 style="font-weight: bold; color: #225fdd">As part of CodeFiesta 2021 Singapore</h3>
+{% endblock %}

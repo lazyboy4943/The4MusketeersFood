@@ -2,9 +2,220 @@
 <html lang="en">
 <head>
     <title>Homepage</title>
+    <style>
+    html {
+        height: 95%;
+    }
+    body {
+        height: 95%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .Header {
+        position: absolute;
+        font-size: 48px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding-left: 3%;
+    }
+
+
+    body {
+        min-height: 89;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .banner {
+        position: relative;
+        top: 0%;
+        width: 100%;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+    body {
+        font-family: 'Work Sans', sans-serif;
+        background: #111;
+        text-align: center;
+    }
+    .wrapperbutton {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 100px;
+    }
+
+    .wrappersignin {
+        width: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 150px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+    .wrappersignup {
+        width: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+    .button {
+        user-select: none;
+        display: inline-block;
+        border: 0.2em solid;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        opacity: 0.6;
+        color: #fff;
+    }
+    .button__text {
+        display: block;
+        padding: 1em 2em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .button__text:before {
+        content: attr(title);
+    }
+    .button__text--bis {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    .button__mask {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        transform: translateX(-100%) rotate(45deg);
+        transition: all 0.3s;
+    }
+    .button:hover {
+        opacity: 1;
+    }
+    .button:hover .button__text {
+        animation: fx-text 0.3s ease-out;
+    }
+    .button:hover .button__text--bis {
+        animation: fx-text-bis 0.3s ease-out;
+    }
+    .button:hover .button__mask {
+        animation: fx-mask 0.3s ease-out;
+    }
+    .button:active {
+        opacity: 1;
+        background: white;
+        color: inherit;
+    }
+    @keyframes fx-mask {
+        0% {
+            transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+    @keyframes fx-text {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(1em);
+            opacity: 0;
+        }
+    }
+    @keyframes fx-text-bis {
+        0% {
+            transform: translateX(-1em);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .text {
+        color: #a0a0a0;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    </style>
 </head>
 <body>
-    <h1>Homepage</h1>
-    <a href="/preferences">Preferences</a>
+    <div class = 'banner'>
+        <img src = 'static/img/banner2.png'>
+    </div>
+    <div class="wrapperbutton">
+
+        <div class="button" onClick="location.href='/preferences'">
+          <span class="button__mask"></span>
+          <span class="button__text">Get Food</span>
+          <span class="button__text button__text--bis">Get Food</span>
+        </div>
+        
+        <br>
+      
+    </div>
+
+
+    <div class="wrappersignin">
+
+        <div class="button" onClick="location.href='/signin'">
+          <span class="button__mask"></span>
+          <span class="button__text">Sign In</span>
+          <span class="button__text button__text--bis">Sign In</span>
+        </div>
+        
+        <br>
+      
+    </div>
+
+
+    <div class="wrappersignup">
+
+        <div class="button" onClick="location.href='/signup'">
+          <span class="button__mask"></span>
+          <span class="button__text">Sign Up</span>
+          <span class="button__text button__text--bis">Sign Up</span>
+        </div>
+        
+        <br>
+      
+    </div>
+
+    <br><br>
+    <div class = 'text'>
+        We, at FoodSG help Singaporeans who live internationally taste home-made, Singaporean food, so they can feel at home!
+    </div>
 </body>
 </html>

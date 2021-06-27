@@ -1,34 +1,46 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-   <title>Enter Preferences</title>
+<head>
+    <title>Preferences</title>
 </head>
 <body>
-    <div class = preferences>
+    
+
+
+
+
+
+    <h1>Preferences</h1>
+
+
+
+    <div class="preferences" style="align-content: center;" class="form-control">
+
         <form action="/preferences" id="getcuisineform" method="post" action = '/listings'>
-            <select name='cuisine' id='cuisines'>
+
+            <select name='cuisine' id='cuisines' class="btn btn-info">
                 <option value='Assorted'>Assorted</option>
                 <option value='Chinese'>Chinese</option>
                 <option value='Malay'>Malay</option>
                 <option value='Indian'>Indian</option>
             </select> 
-            <br><br>
-            <select name='veg' id='veg'>
-                <option value='Both'>Not Vegetarian</option>
-                <option value='Vegetarian'>Vegetarian</option>
-            </select>
-            <br><br><br> 
-            <input type="submit" class="submit">
-        </form>
-    </div>
-    <script>
-        function getcuisine(){
-            var cuisine = document.getElementById('cuisines').value;
-            console.log('Cuisine:', cuisine);
-            var vegetarian = document.getElementById("veg").value;
-            console.log('Vegetarian:', vegetarian)
 
-        }
-    </script> 
-</body> 
+            <br><br>
+
+            <select name='veg' id='veg' class="btn btn-warning">
+                <option value='Both' class="dropdown-link" style="background-color: red;">Non-vegetarian</option>
+                <option value='Vegetarian' class="dropdown-link" style="background-color: green;">Vegetarian</option>
+            </select>
+
+            <br><br><br> 
+
+            <input type="submit" class="btn btn-primary" value="Find food">
+
+        </form>
+        
+    </div>
+
+
+</body>
 </html>
