@@ -12,13 +12,6 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-    .Header {
-        position: absolute;
-        font-size: 48px;
-        font-family: Arial, Helvetica, sans-serif;
-        padding-left: 3%;
-    }
-
 
     body {
         min-height: 89;
@@ -74,6 +67,20 @@
         position: absolute;
         top: 0px;
         right: 0px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+
+    .wrapperabout {
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 300px;
         padding-top: 15px;
         padding-right: 15px;
     }
@@ -213,9 +220,24 @@
       
     </div>
 
+
+
+
+    <div class="wrapperabout">
+
+        <div class="button" onClick="location.href='/about'">
+          <span class="button__mask"></span>
+          <span class="button__text">About Us</span>
+          <span class="button__text button__text--bis">About Us</span>
+        </div>
+        
+        <br>
+      
+    </div>    
+
     <br><br>
     <div class = 'text'>
-        We, at FoodSG help Singaporeans who live internationally taste home-made, Singaporean food, so they can feel at home!
+        We, at FeelAtHome.sg help Singaporeans living abroad taste home-made, Singaporean food, so they can feel at home!
     </div>
 </body>
 </html>

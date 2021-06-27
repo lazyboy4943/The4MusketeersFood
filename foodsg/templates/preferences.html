@@ -3,6 +3,223 @@
 <html lang="en">
 <head>
     <title>Preferences</title>
+
+    <style>
+    html {
+        height: 95%;
+    }
+    body {
+        height: 95%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+
+
+    body {
+        min-height: 89;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .banner {
+        position: relative;
+        top: 0%;
+        width: 100%;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+    body {
+        font-family: 'Work Sans', sans-serif;
+        background: #111;
+        text-align: center;
+    }
+    .submit {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 80px;
+    }
+
+
+
+    .button {
+        user-select: none;
+        display: inline-block;
+        border: 0.2em solid;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        opacity: 0.6;
+        color: #fff;
+    }
+    .button__text {
+        display: block;
+        padding: 1em 2em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .button__text:before {
+        content: attr(title);
+    }
+    .button__text--bis {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    .button__mask {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        transform: translateX(-100%) rotate(45deg);
+        transition: all 0.3s;
+    }
+    .button:hover {
+        opacity: 1;
+    }
+    .button:hover .button__text {
+        animation: fx-text 0.3s ease-out;
+    }
+    .button:hover .button__text--bis {
+        animation: fx-text-bis 0.3s ease-out;
+    }
+    .button:hover .button__mask {
+        animation: fx-mask 0.3s ease-out;
+    }
+    .button:active {
+        opacity: 1;
+        background: white;
+        color: inherit;
+    }
+    @keyframes fx-mask {
+        0% {
+            transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+    @keyframes fx-text {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(1em);
+            opacity: 0;
+        }
+    }
+    @keyframes fx-text-bis {
+        0% {
+            transform: translateX(-1em);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .text {
+        color: #a0a0a0;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    .preferences {
+        color: #e7e7e7;
+    }
+
+
+    body {
+	 background: #111;
+	 color: #e7e7e7;
+	 /*font-family: 'Courier New', monospace;*/
+	 font-size: 15px;
+	 min-height: 100vh;
+    }
+    .center {
+        display: flex;
+    }
+    .radio-group {
+        margin: auto;
+        display: flex;
+    }
+    @media (max-width: 48em) {
+        .radio-group {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+    }
+    .radio-group-label {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+    .radio-label {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+    }
+    @media (max-width: 48em) {
+        .radio-label {
+            display: block;
+            margin: 10px 0;
+        }
+    }
+    .radio-label input {
+        opacity: 0;
+        position: absolute;
+    }
+    .radio-label .inner-label {
+        position: relative;
+        display: inline-block;
+        padding-left: 40px;
+    }
+    .radio-label .inner-label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+        width: 30px;
+        transition: border-bottom 0.5s ease;
+    }
+    .radio-label input:focus ~ .inner-label:before {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    }
+    .radio-label input:checked ~ .inner-label:after {
+        content: '\2713';
+        color: #e7e7e7;
+        position: absolute;
+        font-size: 12px;
+        left: 12px;
+        top: 1px;
+    }
+ 
+
+    </style>
+
+
+
+
 </head>
 <body>
     
@@ -11,7 +228,11 @@
 
 
 
-    <h1>Preferences</h1>
+   
+
+    <div class = 'banner'>
+        <img src = 'static/img/banner3.png'>
+    </div>
 
 
 
@@ -19,28 +240,77 @@
 
         <form action="/preferences" id="getcuisineform" method="post" action = '/listings'>
 
-            <select name='cuisine' id='cuisines' class="btn btn-info">
-                <option value='Assorted'>Assorted</option>
-                <option value='Chinese'>Chinese</option>
-                <option value='Malay'>Malay</option>
-                <option value='Indian'>Indian</option>
-            </select> 
 
             <br><br>
 
-            <select name='veg' id='veg' class="btn btn-warning">
-                <option value='Both' class="dropdown-link" style="background-color: red;">Non-vegetarian</option>
-                <option value='Vegetarian' class="dropdown-link" style="background-color: green;">Vegetarian</option>
-            </select>
+            <div class="center">
+                <div class='radio-group'>
+                  <label class='radio-label'>
+                      <input name='cuisine' type='radio' id='cuisines' value="Assorted" checked='checked'>
+                      <span class='inner-label'>Assorted</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='cuisine' type='radio' id='cuisines' value="Chinese">
+                      <span class='inner-label'>Chinese</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='cuisine' type='radio' id='cuisines' value="Malay">
+                      <span class='inner-label'>Malay</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='cuisine' type='radio' id='cuisines' value="Indian">
+                      <span class='inner-label'>Indian</span>
+                  </label>
+              </div>
+              </div>
+
+
+              <br>
+              <br>
+              <br>
+
+
+
+
+
+            <div class="center">
+                <div class='radio-group'>
+                  <label class='radio-label'>
+                      <input name='veg' type='radio' id='veg' value="Both" checked='checked'>
+                      <span class='inner-label'>Not Vegetarian</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='veg' type='radio' id='veg' value="Vegetarian">
+                      <span class='inner-label'>Vegetarian</span>
+                  </label>
+              </div>
+              </div>
+
+
 
             <br><br><br> 
 
-            <input type="submit" class="btn btn-primary" value="Find food">
+            <div class="submit">
+
+                <div class="button"  value = "submit" onclick="submitcuisine()">
+                  <span class="button__mask"></span>
+                  <span class="button__text">Find food!</span>
+                  <span class="button__text button__text--bis">Find Food!</span>
+                </div>
+                
+                <br>
+              
+            </div>
 
         </form>
-        
-    </div>
 
+    </div>
+    
+    <script>
+        function submitcuisine() {
+            document.getElementById('getcuisineform').submit();
+        }
+    </script>
 
 </body>
 </html>

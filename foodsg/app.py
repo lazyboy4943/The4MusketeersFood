@@ -36,9 +36,9 @@ sellers = {
 def homepage():
     return render_template('home.html')
 
-@app.route("/home")
-def test():
-    return render_template("home1.html")
+#@app.route("/home")
+#def test():
+#    return render_template("home1.html")
     
 @app.route("/about")
 def about():
@@ -52,7 +52,15 @@ def preferences():
     preferences.veg = request.form.get("veg")
     preferences.cuisine = request.form.get("cuisine")   
     return redirect("/listings")
-    
+
+#@app.route("/preferences1", methods=["GET", "POST"])
+#def preferences1():
+#    if request.method == "GET":
+#        return render_template('pref1.html')
+
+#    preferences.veg = request.form.get("veg")
+#    preferences.cuisine = request.form.get("cuisine")   
+#    return redirect("/listings")
 
 @app.route("/listings")
 def listings(): 
@@ -69,9 +77,7 @@ def listings():
                 if sellers[seller]["cuisine"] == preferences.cuisine:
                     recommendedsellers.append(sellers[seller])
 
-    recommendedsellers = tuple(recommendedsellers)
-        
-    return render_template('listings.html', listings = recommendedsellers)
+    return render_template('listings.html', listings=recommendedsellers, cuisine=preferences.cuisine, veg=preferences.veg)
 
 @app.route('/signin')
 def signinpage():

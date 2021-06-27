@@ -4,10 +4,24 @@
     About 
 {% endblock %}
 
+{% block extra %}
+    <div class = 'banner'>
+        <img src = 'static/img/banner2.png'>
+    </div>
+{% endblock %}
+
 {% block main %}
-    <h1 style="font-weight: bold; color: #225fdd">Creators of <span style="color: red;">SG</span><span style="color: black;">Food</span></h1>
+    <h1 style="font-weight: bold; color: #e4e4e4">Creators of <span style="color: #444444;">FeelAtHome</span><span style="color:red;">SG</span></h1>
     {% for name in names %}
-        <b><p style="color: #ee22ee;">{{ name }}</p></b>
+        <b><p style="color: #e7e7e7;">{{ name }}</p></b>
     {% endfor %}
-    <h3 style="font-weight: bold; color: #225fdd">As part of CodeFiesta 2021 Singapore</h3>
+    <h3 style="font-weight: bold; color: #e4e4e4">As part of CodeFiesta 2021 Singapore</h3>
+    <div class="wrappersignin" onclick="location.href='/'" style="width: 200px;">
+        <div class="button">
+            <span class="button__mask"></span>
+            <span class="button__text">Back to Home</span>
+            <span class="button__text button__text--bis">Back to Home</span>
+        </div>
+        <br>
+    </div>
 {% endblock %}

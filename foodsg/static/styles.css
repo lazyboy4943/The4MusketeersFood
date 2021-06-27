@@ -1,8 +1,25 @@
+html 
+{
+    height: 95%;
+}
 body 
 {
     background-position: center;
     background-image: linear-gradient(to right, #164A41, #4D774E);
     line-height: 1;
+}
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+body 
+{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 89;
+    background-image: url('static/img/marble.jpg');
+    font-family: 'Work Sans', sans-serif;
+    background: #111;
+    text-align: center;
+    height: 95%;
+    margin: 0;
 }
 
 main
@@ -13,6 +30,11 @@ main
     text-align: center;
 }
 
+main 
+{
+    background: inherit;
+}
+
 main .form-control
 {
     display: inline-block;
@@ -21,7 +43,7 @@ main .form-control
 
 .extraspace
 {
-    min-height: 3.5cm;
+    min-height: 3cm;
 }
 
 img 
@@ -43,27 +65,17 @@ img
     position: absolute;
     top: 65%;
     left: 15%;
-    color: #e4e4e4;
+    color: #e4e4e4; 
     font-family:Arial, Helvetica, sans-serif;
     font-size: 50px;
 }
 
 .card-text
 {
-    color: #2200ff;
+    text-align: left;
+    color: #e7e7e7;
     font-weight: bolder;
     font-variant: small-caps;
-}
-
-.col-md-8
-{
-    text-align: left;
-    background-image: linear-gradient(to left, #f53030, lightcoral);
-}
-
-.col-md-4
-{
-    background-image: linear-gradient(to left, #f53030, lightcoral);
 }
 
 .wrapperbutton {
@@ -86,9 +98,22 @@ img
     justify-content: center;
     position: absolute;
     top: 0px;
-    right: 150px;
+    right: 15px;
     padding-top: 15px;
     padding-right: 15px;
+}
+
+.placeorderbtn {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding-bottom: 0;
+    padding-right: 0;
 }
 
 .wrappersignup {
@@ -112,7 +137,7 @@ img
     cursor: pointer;
     overflow: hidden;
     opacity: 0.6;
-    color: #fff;
+    color: #ffffff;
     box-sizing: content-box;
 }
 
@@ -150,7 +175,7 @@ img
     left: 0;
     right: 0;
     bottom: 0;
-    background: white;
+    background: #ffffff;
     transform: translateX(-100%) rotate(45deg);
     transition: all 0.3s;
 }
@@ -173,6 +198,7 @@ img
 .button:active {
     opacity: 1;
     background: white;
+    border-color: white;
     color: inherit;
 }
 
@@ -210,4 +236,5 @@ img
 .text {
     color: #a0a0a0;
     font-family: 'Work Sans', sans-serif;
+    text-align: center;
 }
