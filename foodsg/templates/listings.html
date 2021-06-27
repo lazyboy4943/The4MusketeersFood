@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Listings</title>
+</head>
+<body>
+    {% for listing in listings %}
+        <div>
+            {% for key in listing %}
+                {{key}}: {{listing[key]}}
+                <br>
+            {% endfor %}
+        </div>
+        <br>
+        <br>
+    {% endfor %}
+</body>
+</html>
+

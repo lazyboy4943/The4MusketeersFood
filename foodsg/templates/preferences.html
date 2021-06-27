@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+   <title>Enter Preferences</title>
+</head>
+<body>
+    <div class = preferences>
+        <form action="/preferences" id="getcuisineform" method="post" action = '/listings'>
+            <select name='cuisine' id='cuisines'>
+                <option value='Assorted'>Assorted</option>
+                <option value='Chinese'>Chinese</option>
+                <option value='Malay'>Malay</option>
+                <option value='Indian'>Indian</option>
+            </select> 
+            <br><br>
+            <select name='veg' id='veg'>
+                <option value='Both'>Not Vegetarian</option>
+                <option value='Vegetarian'>Vegetarian</option>
+            </select>
+            <br><br><br> 
+            <input type="submit" class="submit">
+        </form>
+    </div>
+    <script>
+        function getcuisine(){
+            var cuisine = document.getElementById('cuisines').value;
+            console.log('Cuisine:', cuisine);
+            var vegetarian = document.getElementById("veg").value;
+            console.log('Vegetarian:', vegetarian)
+
+        }
+    </script> 
+</body> 
+</html>

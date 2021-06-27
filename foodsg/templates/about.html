@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>About</title>
+</head>
+<body>
+    <h1>This is the about page</h1>
+    <p>Made for a hackathon by:</p>
+    {% for name in names %}
+        <p style="display: inline;">{{ name }},</p>
+    {% endfor %}
+</body>
+</html>
