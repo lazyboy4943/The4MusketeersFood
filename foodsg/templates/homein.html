@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Homepage</title>
+    <style>
+    html {
+        height: 95%;
+    }
+    body {
+        height: 95%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    body {
+        min-height: 89;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .banner {
+        position: relative;
+        top: 0%;
+        width: 100%;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+    body {
+        font-family: 'Work Sans', sans-serif;
+        background: #111;
+        text-align: center;
+    }
+    .wrapperbutton {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 100px;
+    }
+
+    .wrappersignin {
+        width: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+    .wrappersignup {
+        width: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+
+    .wrapperabout {
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 150px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+    .wrappersell {
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0px;
+        right: 330px;
+        padding-top: 15px;
+        padding-right: 15px;
+    }
+
+    .button {
+        user-select: none;
+        display: inline-block;
+        border: 0.2em solid;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        opacity: 0.6;
+        color: #fff;
+    }
+    .button__text {
+        display: block;
+        padding: 1em 2em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .button__text:before {
+        content: attr(title);
+    }
+    .button__text--bis {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    .button__mask {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        transform: translateX(-100%) rotate(45deg);
+        transition: all 0.3s;
+    }
+    .button:hover {
+        opacity: 1;
+    }
+    .button:hover .button__text {
+        animation: fx-text 0.3s ease-out;
+    }
+    .button:hover .button__text--bis {
+        animation: fx-text-bis 0.3s ease-out;
+    }
+    .button:hover .button__mask {
+        animation: fx-mask 0.3s ease-out;
+    }
+    .button:active {
+        opacity: 1;
+        background: white;
+        color: inherit;
+    }
+    @keyframes fx-mask {
+        0% {
+            transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+    @keyframes fx-text {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(1em);
+            opacity: 0;
+        }
+    }
+    @keyframes fx-text-bis {
+        0% {
+            transform: translateX(-1em);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .text {
+        color: #a0a0a0;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    </style>
+</head>
+<body>
+    <div class = 'banner'>
+        <img src = 'static/img/banner2.png'>
+    </div>
+    <div class="wrapperbutton">
+
+        <div class="button" onClick="location.href='/preferences'">
+          <span class="button__mask"></span>
+          <span class="button__text">Feel At Home!</span>
+          <span class="button__text button__text--bis">Feel At Home!</span>
+        </div>
+
+        <br>
+
+    </div>
+
+
+    <div class="wrappersignin">
+
+        <div class="button" onClick="location.href='/logout'">
+          <span class="button__mask"></span>
+          <span class="button__text">Log Out</span>
+          <span class="button__text button__text--bis">Log Out</span>
+        </div>
+
+        <br>
+
+    </div>
+
+    <div class="wrappersell">
+
+        <div class="button" onClick="location.href='/sell'">
+          <span class="button__mask"></span>
+          <span class="button__text">Sell / Host</span>
+          <span class="button__text button__text--bis">Sell / Host</span>
+        </div>
+
+        <br>
+
+    </div>
+
+
+
+
+
+    <div class="wrapperabout">
+
+        <div class="button" onClick="location.href='/about'">
+          <span class="button__mask"></span>
+          <span class="button__text">About Us</span>
+          <span class="button__text button__text--bis">About Us</span>
+        </div>
+
+        <br>
+
+    </div>
+
+    <br><br>
+    <div class = 'text'>
+        <p>Are you a Singaporean abroad and feeling lonely? <b>Meet up</b> with a Singaporean Family over a meal!</p>
+        <p>Are you a Singaporean family who would like to help? Help a fellow Singaporean <b>feel at home!</b></p>
+        <p>We, at FeelAtHome.sg help Singaporeans living abroad <b>connect</b> with each other and <b>feel at home!</b></p>
+    </div>
+</body>
+</html>
