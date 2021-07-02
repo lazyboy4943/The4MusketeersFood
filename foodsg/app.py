@@ -102,27 +102,33 @@ def test():
 
 @app.route('/sell', methods=["GET", "POST"])
 def sell():
-    if request.method == "GET":
-        return render_template("sell.html", sold=False)
+    email = dict(session).get("email", None)
+    if email: 
+        if request.method == "GET":
+            return render_template("sell.html", sold=False)
 
-    cuisine = request.form.get("cuisine")
-    if request.form.get("veg") == "Vegetarian":
-        veg = 1
+        cuisine = request.form.get("cuisine")
+        if request.form.get("veg") == "Vegetarian":
+            veg = 1
+        else:
+            veg = 0
+        name = request.form.get("name")
+        dishname = request.form.get("dishname")
+        phone = request.form.get("phone")
+        latitude = float(request.form.get("latitude"))
+        longitude = float(request.form.get("longitude"))
+        query = """
+        INSERT INTO listings 
+        (seller, description, cuisine, veg, phone_num, availability, latitude, longitude, email)
+        VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?);
+        """
+        print(email)
+        values = tuple((name, dishname, cuisine, veg, phone, latitude, longitude, email))
+        if executeWriteQuery(db, query, values):
+            return render_template("sell.html", sold=True)
+    
     else:
-        veg = 0
-    name = request.form.get("name")
-    dishname = request.form.get("dishname")
-    phone = request.form.get("phone")
-    latitude = float(request.form.get("latitude"))
-    longitude = float(request.form.get("longitude"))
-    query = """
-    INSERT INTO listings 
-    (seller, description, cuisine, veg, phone_num, availability, latitude, longitude)
-    VALUES (?, ?, ?, ?, ?, 1, ?, ?);
-    """
-    values = tuple((name, dishname, cuisine, veg, phone, latitude, longitude))
-    if executeWriteQuery(db, query, values):
-        return render_template("sell.html", sold=True)
+        return redirect("/")
     
 
 @app.route("/about")

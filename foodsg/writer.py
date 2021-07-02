@@ -30,6 +30,6 @@ DELETE FROM listings;
 print(executeWriteQuery(db, query))
 
 # LISTINGS
-# listing_id | seller | description | availability | rating | cuisine | veg | phone_num | latitude | longitude | location
+# listing_id | seller | description | availability | rating | cuisine | veg | phone_num | latitude | longitude | location | email
 
 # store latitude and longitude in a tuple
