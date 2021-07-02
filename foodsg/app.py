@@ -1,20 +1,23 @@
-from flask import render_template, redirect, Flask, session, request, url_for
+from flask import render_template, redirect, Flask, session, request, url_for, jsonify
 from flask_session import Session
 from tempfile import mkdtemp
-import json
-import os
-import sqlite3
-#from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+import requests
+from flask_simple_geoip import SimpleGeoIP
+import mpu
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 #from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import getConnection, executeWriteQuery, executeReadQuery, login_required
+from helpers import getConnection, executeWriteQuery, executeReadQuery
 
 
 from authlib.integrations.flask_client import OAuth
 
 
 app = Flask(__name__)
-app.secret_key = '5yTuleqqRRdRwvCf'
+app.secret_key = ''
+
+app.config.update(GEOIPIFY_API_KEY='')
+simple_geoip = SimpleGeoIP(app)
 
 
 oauth = OAuth(app)
@@ -46,18 +49,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 names = ['Prakamya Singh', 'Praneeth Suresh', 'Pratyush Bansal', 'Rahul Rajkumar']
-sellers = {
-    1: {"name": "Wong Lao", "cuisine": "Assorted", "foodavailable": True, "vegetarian": True},
-    2: {"name": "Stan Lee", "cuisine": "Assorted", "foodavailable": True, "vegetarian": True},
-    3: {"name": "Suresh Kumar", "cuisine": "Indian", "foodavailable": True, "vegetarian": True},
-    4: {"name": "Adam Wong", "cuisine": "Chinese", "foodavailable": True, "vegetarian": True},
-    5: {"name": "Chan Li", "cuisine": "Assorted", "foodavailable": True, "vegetarian": False},
-    6: {"name": "Mohammed bin Yusuf", "cuisine": "Malay", "foodavailable": True, "vegetarian": True},
-    7: {"name": "Abdul Rahman", "cuisine": "Malay", "foodavailable": True, "vegetarian": False},
-    8: {"name": "Faadil Ahmed", "cuisine": "Indian", "foodavailable": True, "vegetarian": True},
-}
-
-# whatever that was
+db = getConnection("feelathomesg.db")
 
 @app.route('/login')
 def login():
@@ -86,7 +78,11 @@ def homepage():
 @app.route('/signedin')
 def signedin():
     email = dict(session).get('email', None)
-    return render_template('homein.html', email = email)
+
+    if email:
+        return render_template('homein.html', email = email)
+    else:
+        return redirect("/signedout")
 
 @app.route("/signedout")
 def signedout():
@@ -104,26 +100,55 @@ def logout():
 def test():
     return redirect("/")
 
-@app.route('/sell')
+@app.route('/sell', methods=["GET", "POST"])
 def sell():
-    return 'this is the sell page'
+    if request.method == "GET":
+        return render_template("sell.html", sold=False)
 
+    cuisine = request.form.get("cuisine")
+    if request.form.get("veg") == "Vegetarian":
+        veg = 1
+    else:
+        veg = 0
+    name = request.form.get("name")
+    dishname = request.form.get("dishname")
+    phone = request.form.get("phone")
+    latitude = float(request.form.get("latitude"))
+    longitude = float(request.form.get("longitude"))
+    query = """
+    INSERT INTO listings 
+    (seller, description, cuisine, veg, phone_num, availability, latitude, longitude)
+    VALUES (?, ?, ?, ?, ?, 1, ?, ?);
+    """
+    values = tuple((name, dishname, cuisine, veg, phone, latitude, longitude))
+    if executeWriteQuery(db, query, values):
+        return render_template("sell.html", sold=True)
     
+
 @app.route("/about")
 def about():
     return render_template('about.html', names = names)
 
 @app.route("/preferences", methods=["GET", "POST"])
 def preferences():
-    if request.method == "GET":
-        return render_template('preferences.html')
+    email = dict(session).get('email', None)
 
-    preferences.veg = request.form.get("veg")
-    preferences.cuisine = request.form.get("cuisine")   
-    return redirect("/listings")
+    if email:
 
-#@app.route("/preferences1", methods=["GET", "POST"])
-#def preferences1():
+        if request.method == "GET":
+            return render_template('preferences.html')
+
+        preferences.veg = request.form.get("veg")
+        preferences.cuisine = request.form.get("cuisine")   
+        preferences.buyerLat = float(request.form.get("latitude"))
+        preferences.buyerLong = float(request.form.get("longitude"))
+        return redirect("/listings")
+    
+    else:
+        return redirect("/")
+
+# @app.route("/preferences1", methods=["GET", "POST"])
+# def preferences1():
 #    if request.method == "GET":
 #        return render_template('pref1.html')
 
@@ -133,20 +158,37 @@ def preferences():
 
 @app.route("/listings")
 def listings(): 
-    recommendedsellers = []
-    if preferences.veg == "Vegetarian":
-        for seller in sellers:
-            if sellers[seller]["foodavailable"]:
-                if sellers[seller]["cuisine"] == preferences.cuisine:
-                    if sellers[seller]["vegetarian"]:
-                        recommendedsellers.append(sellers[seller])
-    else:
-        for seller in sellers:
-            if sellers[seller]["foodavailable"]:
-                if sellers[seller]["cuisine"] == preferences.cuisine:
-                    recommendedsellers.append(sellers[seller])
+    email = dict(session).get('email', None)
+    if email:
+        if preferences.veg == "Vegetarian":
+            veg = 1
+        else:
+            veg = 0
+        query = "SELECT seller, description, phone_num, latitude, longitude FROM listings WHERE availability = 1 AND cuisine = ? AND veg = ?"
+        values = tuple((preferences.cuisine, veg))
+        listings = executeReadQuery(db, query, values)
+        print(listings)
+        viableSellers = []
+        lat1, long1 = preferences.buyerLat, preferences.buyerLong
+        for listing in listings:
+            lat2, long2 = listing[3], listing[4]
+            dist = mpu.haversine_distance((lat1, long1), (lat2, long2))
+            if dist <= 40:
+                tmp = []
+                for i in range(3):
+                    tmp.append(listing[i])
+                if dist >= 1:
+                    tmp.append(f"{dist:.1f} km")
+                else:
+                    tmp.append(f"{dist:.1f} meters")
+                viableSellers.append(tmp)
 
-    return render_template('listings.html', listings=recommendedsellers, cuisine=preferences.cuisine, veg=preferences.veg)
+        return render_template('listings.html', listings=viableSellers, cuisine=preferences.cuisine, veg=preferences.veg)
+
+    else:
+        return redirect("/")
+
+
 
 @app.route('/signin')
 def signinpage():
@@ -156,6 +198,15 @@ def signinpage():
 def signuppage():
     return "signup"
 
+# error handling
+def errorhandler(e):
+    if not isinstance(e, HTTPException):
+        e = InternalServerError()
+    return render_template("error.html", name=e.name, code=e.code)
+
+# listen for errors
+for code in default_exceptions:
+    app.errorhandler(code)(errorhandler)
 
 if __name__ == "__main__":
     app.run(ssl_context="adhoc")

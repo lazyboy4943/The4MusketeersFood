@@ -1,5 +1,5 @@
 import sqlite3
-from flask import redirect, session
+from flask import redirect, session, request
 from functools import wraps
 
 # connect database with sqlite3
@@ -20,7 +20,7 @@ def executeWriteQuery(connection, query, placeholders=()):
 # execute a read query from database
 def executeReadQuery(connection, query, placeholders=()):
     cursor = connection.cursor()
-    #print(query, placeholders)
+    print(query, placeholders)
     cursor.execute(query, placeholders)
     return cursor.fetchall()
 
@@ -33,3 +33,4 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+

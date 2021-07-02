@@ -198,7 +198,6 @@ img
 .button:active {
     opacity: 1;
     background: white;
-    border-color: white;
     color: inherit;
 }
 

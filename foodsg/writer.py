@@ -18,17 +18,18 @@ def executeWriteQuery(connection, query, placeholders=()):
 # execute a read query from database
 def executeReadQuery(connection, query, placeholders=()):
     cursor = connection.cursor()
-    #print(query, placeholders)
+    print(query, placeholders)
     cursor.execute(query, placeholders)
     return cursor.fetchall()
 
-db = getConnection("foodsellers.db")
+db = getConnection("feelathomesg.db")
 query = """
-SELECT * FROM sellers;
+DELETE FROM listings;
 """
 
-x = executeReadQuery(db, query)
-print(x)
+print(executeWriteQuery(db, query))
 
-# seller_id | name | description | availability | rating | location | cuisine | veg | email | phone_num
-# DO NOT CHANGE ANYTHING IN foodsellers.db PLEASE
+# LISTINGS
+# listing_id | seller | description | availability | rating | cuisine | veg | phone_num | latitude | longitude | location
+
+# store latitude and longitude in a tuple

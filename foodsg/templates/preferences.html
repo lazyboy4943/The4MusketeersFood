@@ -222,27 +222,12 @@
 
 </head>
 <body>
-    
-
-
-
-
-
-   
-
     <div class = 'banner'>
         <img src = 'static/img/banner3.png'>
     </div>
-
-
-
     <div class="preferences" style="align-content: center;" class="form-control">
-
         <form action="/preferences" id="getcuisineform" method="post" action = '/listings'>
-
-
             <br><br>
-
             <div class="center">
                 <div class='radio-group'>
                   <label class='radio-label'>
@@ -263,21 +248,14 @@
                   </label>
               </div>
               </div>
-
-
               <br>
               <br>
               <br>
-
-
-
-
-
             <div class="center">
                 <div class='radio-group'>
                   <label class='radio-label'>
                       <input name='veg' type='radio' id='veg' value="Both" checked='checked'>
-                      <span class='inner-label'>Not Vegetarian</span>
+                      <span class='inner-label'>Non-Vegetarian</span>
                   </label>
                   <label class='radio-label'>
                       <input name='veg' type='radio' id='veg' value="Vegetarian">
@@ -285,32 +263,40 @@
                   </label>
               </div>
               </div>
-
-
-
+            <input hidden id="latitude" name="latitude" type="text">
+            <input hidden id="longitude" name="longitude" type="text">
             <br><br><br> 
-
             <div class="submit">
-
-                <div class="button"  value = "submit" onclick="submitcuisine()">
+                <div class="button" value="submit" onclick="submitcuisine()">
                   <span class="button__mask"></span>
                   <span class="button__text">Find food!</span>
                   <span class="button__text button__text--bis">Find Food!</span>
                 </div>
-                
                 <br>
-              
             </div>
-
         </form>
-
     </div>
-    
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    let buyerlat = position.coords.latitude; // sellerlat is the latitude of the seller
+                    let buyerlong = position.coords.longitude; // sellerlong is the longitude of the seller 
+                    let positionInfo = "Your current position is (Latitude: " + buyerlat + ", Longitude: " + buyerlong + ")";
+                    console.log(positionInfo);
+                    document.querySelector("#latitude").value = buyerlat;
+                    document.querySelector("#longitude").value = buyerlong;
+                    return true;
+                    });
+                } 
+                else {
+                    alert("Sorry, your browser does not support HTML5 geolocation. Please update your browser, or try a different browser");
+                    return false;
+                }
+            })
         function submitcuisine() {
             document.getElementById('getcuisineform').submit();
         }
     </script>
-
 </body>
 </html>
