@@ -1,6 +1,7 @@
 import sqlite3
 from flask import redirect, session, request
 from functools import wraps
+import smtplib
 
 # connect database with sqlite3
 def getConnection(db):
@@ -33,4 +34,3 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
-

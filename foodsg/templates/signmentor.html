@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sell / Host</title>
+    <title>Mentor area</title>
 
     <style>
-
-
         html {
             height: 95%;
         }
@@ -47,12 +45,13 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            padding-top: 50px;
+            padding-top: 80px;
         }
+
 
         .backtohome {
             position: absolute;
-            width: 190px;
+            width: 200px;
             display: flex;
             flex-direction: column;
             margin: 0 auto;
@@ -60,18 +59,6 @@
             padding-right: 20px;
             top: 0px;
             right: 0px;
-        }
-
-        .mentorsign {
-            position: ce;
-            width: 150px;
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            padding-top: 50px;
         }
     
     
@@ -244,21 +231,21 @@
 
 </head>
 <body>
-    {% if sold %}
+    {% if registered %}
     <script>
-        alert("Success! Your listing has been added")
+        alert("Success! You are now a mentor")
         window.location = "/";
         
     </script>
     {% else %} 
-    <h1 class="text" style="padding-top: 10px;">Fill in this form to Sell / Host</h1>
+    <h1 class="text" style="padding-top: 10px;">Sign up as a Mentor</h1>
     <br>
 
-    <form id = 'sellform' method="post">
+    <form id = 'mentorform' method="post">
         <label for="name">Enter your name:</label><br><br>
         <input type="text" id="name" name="name" placeholder="eg: Ty Lee" required><br><br><br>
-        <label for="dishname">Enter the name of the dish:</label><br><br>
-        <input type="text" id="dishname" name="dishname" placeholder="eg: Nasi Lemak" required><br><br><br>
+        <label for="descr">Write a few words about yourself(max 300 characters)</label><br><br>
+        <input type="textarea" id="descr" name="descr" required><br><br><br>
         <label for="phone">Enter your phone number (with the country and/or area code):</label><br><br>
         <input type="text" id="phone" name="phone" placeholder="eg: +44 1234 123456" required><br><br><br>
     
@@ -266,20 +253,20 @@
         <div class="center">
             <div class='radio-group'>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Assorted" checked='checked'>
-                  <span class='inner-label'>Assorted</span>
+                  <input name='expertin' type='radio' id='expertinid' value="Computer Science" checked='checked'>
+                  <span class='inner-label'>Computer Science</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Chinese">
-                  <span class='inner-label'>Chinese</span>
+                  <input name='expertin' type='radio' id='expertinid' value="Medecine">
+                  <span class='inner-label'>Medecine</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Malay">
-                  <span class='inner-label'>Malay</span>
+                  <input name='expertin' type='radio' id='expertinid' value="business">
+                  <span class='inner-label'>Business</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Indian">
-                  <span class='inner-label'>Indian</span>
+                  <input name='expertin' type='radio' id='expertinid' value="General">
+                  <span class='inner-label'>General</span>
               </label>
           </div>
           </div>
@@ -287,30 +274,21 @@
           <br>
           <br>
         <div class="center">
-          <div class='radio-group'>
-              <label class='radio-label'>
-                  <input name='veg' type='radio' id='veg' value="Both" checked='checked'>
-                  <span class='inner-label'>Not Vegetarian</span>
-              </label>
-              <label class='radio-label'>
-                  <input name='veg' type='radio' id='veg' value="Vegetarian">
-                  <span class='inner-label'>Vegetarian</span>
-              </label>
-            </div>
             </div>
             <input type="text" id="latitude" name="latitude" hidden>
             <input type="text" id="longitude" name="longitude" hidden>
           <br>
-
+          <br>
           <div class="submit">
-            <div class="button" value="submit" onclick="swee(); return false">
+            <div class="button" value="submit" onclick="triggersubmit(); return false">
               <span class="button__mask"></span>
               <span class="button__text">Submit!</span>
               <span class="button__text button__text--bis">Submit!</span>
             </div>
-
+            <br>
         </div>
     </form>
+
 
 
     <div class="backtohome">
@@ -321,33 +299,19 @@
           <span class="button__text button__text--bis">Back To Home</span>
         </div>
 
-
-
-    </div>
-
-
-    <div class="mentorsign">
-
-        <div class="button" onClick="location.href='/signmentor'">
-          <span class="button__mask"></span>
-          <span class="button__text">Sign up as a mentor isntead?</span>
-          <span class="button__text button__text--bis">Sign up as a mentor isntead?</span>
-        </div>
-
+        <br>
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
-                    var sellerlat = position.coords.latitude; // sellerlat is the latitude of the seller
-                    var sellerlong = position.coords.longitude; // sellerlong is the longitude of the seller 
-                    var positionInfo = "Your current position is (Latitude: " + sellerlat + ", Longitude: " + sellerlong + ")";
+                    var mentorlat = position.coords.latitude; // mentorlat is the latitude of the mentor
+                    var mentorlong = position.coords.longitude; // mentorlong is the longitude of the mentor
+                    var positionInfo = "Your current position is (Latitude: " + mentorlat + ", Longitude: " + mentorlong + ")";
                     console.log(positionInfo);
-                    document.querySelector("#latitude").value = sellerlat;
-                    document.querySelector("#longitude").value = sellerlong;
+                    document.querySelector("#latitude").value = mentorlat;
+                    document.querySelector("#longitude").value = mentorlong;
                     return true;
                     });
                 } else {
@@ -355,23 +319,7 @@
                     return false;
                 }
         })
-        function swee() {
-            Swal.fire({
-                title: 'Are you sure? This is irreversible!',
-                icon: 'warning',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: `Save`,
-                denyButtonText: `Don't save`,
-                }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    triggersubmit()
-                } else if (result.isDenied) {
-                    window.location = "/"
-                }
-            })
-        }
+
         function triggersubmit() {
             var inputs = document.getElementsByTagName('input')
             for (var i = 0; i < 3; i++) {
@@ -380,7 +328,7 @@
                     return false
                 }
             }
-            document.getElementById('sellform').submit();
+            document.getElementById('mentorform').submit();
         }
     </script>
     {% endif %}

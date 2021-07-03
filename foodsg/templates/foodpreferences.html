@@ -37,6 +37,30 @@
         background: #111;
         text-align: center;
     }
+    .signmentor {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+
+    .backtohome {
+        position: absolute;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-right: 20px;
+        top: 0px;
+        right: 0px;
+    }
+
     .submit {
         position: ce;
         width: 150px;
@@ -46,8 +70,9 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto;
-        padding-top: 80px;
+        padding-top: 10px;
     }
+
 
 
 
@@ -226,7 +251,7 @@
         <img src = 'static/img/banner3.png'>
     </div>
     <div class="preferences" style="align-content: center;" class="form-control">
-        <form action="/preferences" id="getcuisineform" method="post" action = '/listings'>
+        <form action="/foodpreferences" id="getcuisineform" method="post" action = '/foodlistings'>
             <br><br>
             <div class="center">
                 <div class='radio-group'>
@@ -275,7 +300,27 @@
                 <br>
             </div>
         </form>
+
+        <div class="backtohome">
+            <div class="button" onClick="location.href='/'">
+              <span class="button__mask"></span>
+              <span class="button__text">Back To Home</span>
+              <span class="button__text button__text--bis">Back To Home</span>
+            </div>
+            <br>
+        </div>
+    </div><br><br><br>    
+    
+    <div class="signmentor">
+        <div class="button" onClick="location.href='/mentorpreferences'">
+          <span class="button__mask"></span>
+          <span class="button__text">Look for a Mentor instead</span>
+          <span class="button__text button__text--bis">Look for a mentor instead</span>
+        </div>
+        <br>
     </div>
+
+    <br><br><br>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (navigator.geolocation) {

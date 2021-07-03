@@ -12,6 +12,9 @@ from helpers import getConnection, executeWriteQuery, executeReadQuery
 
 from authlib.integrations.flask_client import OAuth
 
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 app = Flask(__name__)
 app.secret_key = ''
@@ -96,16 +99,12 @@ def logout():
     return redirect('/')
 
 
-@app.route("/home")
-def test():
-    return redirect("/")
-
 @app.route('/sell', methods=["GET", "POST"])
 def sell():
     email = dict(session).get("email", None)
     if email: 
         if request.method == "GET":
-            return render_template("sell.html", sold=False)
+            return render_template("sell.html")
 
         cuisine = request.form.get("cuisine")
         if request.form.get("veg") == "Vegetarian":
@@ -131,69 +130,137 @@ def sell():
         return redirect("/")
     
 
+@app.route('/signmentor', methods=["GET", "POST"])
+def signmentor():
+    email = dict(session).get("email", None)
+    if email: 
+        if request.method == "GET":
+            return render_template("signmentor.html")
+
+        area = request.form.get("expertin")
+        name = request.form.get("name")
+        descr = request.form.get("descr")
+        phone = request.form.get("phone")
+        latitude = float(request.form.get("latitude"))
+        longitude = float(request.form.get("longitude"))
+        query = """
+        INSERT INTO mentors
+        (mentor, description, area, phone_num, latitude, longitude, email)
+        VALUES (?, ?, ?, ?, ?, ?, ?);
+        """
+        values = tuple((name, descr, area, phone, latitude, longitude, email))
+        if executeWriteQuery(db, query, values):
+            return render_template("signmentor.html", registered=True)
+    
+    else:
+        return redirect("/")
+
+
 @app.route("/about")
 def about():
     return render_template('about.html', names = names)
 
-@app.route("/preferences", methods=["GET", "POST"])
-def preferences():
+@app.route("/foodpreferences", methods=["GET", "POST"])
+def foodpreferences():
     email = dict(session).get('email', None)
 
     if email:
 
         if request.method == "GET":
-            return render_template('preferences.html')
+            return render_template('foodpreferences.html')
 
-        preferences.veg = request.form.get("veg")
-        preferences.cuisine = request.form.get("cuisine")   
-        preferences.buyerLat = float(request.form.get("latitude"))
-        preferences.buyerLong = float(request.form.get("longitude"))
-        return redirect("/listings")
+        foodpreferences.veg = request.form.get("veg")
+        foodpreferences.cuisine = request.form.get("cuisine")   
+        foodpreferences.buyerLat = float(request.form.get("latitude"))
+        foodpreferences.buyerLong = float(request.form.get("longitude"))
+        return redirect("/foodlistings")
     
     else:
         return redirect("/")
 
-# @app.route("/preferences1", methods=["GET", "POST"])
-# def preferences1():
-#    if request.method == "GET":
-#        return render_template('pref1.html')
 
-#    preferences.veg = request.form.get("veg")
-#    preferences.cuisine = request.form.get("cuisine")   
-#    return redirect("/listings")
+@app.route("/mentorpreferences", methods=["GET", "POST"])
+def mentorpreferences():
+    email = dict(session).get('email', None)
 
-@app.route("/listings")
-def listings(): 
+    if email:
+
+        if request.method == "GET":
+            return render_template('mentorpreferences.html')
+
+        mentorpreferences.area = request.form.get("area")   
+        mentorpreferences.menteeLat = float(request.form.get("latitude"))
+        mentorpreferences.menteeLong = float(request.form.get("longitude"))
+        return redirect("/mentorlistings")
+    
+    else:
+        return redirect("/")
+
+
+@app.route("/foodlistings", methods=["GET", "POST"])
+def foodlistings(): 
     email = dict(session).get('email', None)
     if email:
-        if preferences.veg == "Vegetarian":
-            veg = 1
-        else:
-            veg = 0
-        query = "SELECT seller, description, phone_num, latitude, longitude FROM listings WHERE availability = 1 AND cuisine = ? AND veg = ?"
-        values = tuple((preferences.cuisine, veg))
-        listings = executeReadQuery(db, query, values)
-        print(listings)
-        viableSellers = []
-        lat1, long1 = preferences.buyerLat, preferences.buyerLong
-        for listing in listings:
-            lat2, long2 = listing[3], listing[4]
-            dist = mpu.haversine_distance((lat1, long1), (lat2, long2))
-            if dist <= 40:
-                tmp = []
-                for i in range(3):
-                    tmp.append(listing[i])
-                if dist >= 1:
-                    tmp.append(f"{dist:.1f} km")
-                else:
-                    tmp.append(f"{dist:.1f} meters")
-                viableSellers.append(tmp)
+        if request.method == "GET":
+            if foodpreferences.veg == "Vegetarian":
+                veg = 1
+            else:
+                veg = 0
+            query = "SELECT seller, description, phone_num, listing_id, latitude, longitude FROM listings WHERE availability = 1 AND cuisine = ? AND veg = ?"
+            values = tuple((foodpreferences.cuisine, veg))
+            listings = executeReadQuery(db, query, values)
+            viableSellers = []
+            lat1, long1 = foodpreferences.buyerLat, foodpreferences.buyerLong
+            for listing in listings:
+                lat2, long2 = listing[4], listing[5]
+                dist = mpu.haversine_distance((lat1, long1), (lat2, long2))
+                if dist <= 40:
+                    tmp = []
+                    for i in range(4):
+                        tmp.append(listing[i])
+                    if dist >= 1:
+                        tmp.append(f"{dist:.1f} km")
+                    else:
+                        tmp.append(f"{dist:.1f} meters")
+                    viableSellers.append(tmp)
 
-        return render_template('listings.html', listings=viableSellers, cuisine=preferences.cuisine, veg=preferences.veg)
+            return render_template('foodlistings.html', listings=viableSellers, cuisine=foodpreferences.cuisine, veg=foodpreferences.veg)
+
+        else:
+            foodlistings.listing_id = (int(request.form.get("ordernum")[3:]),)
+            return redirect("/processing")
 
     else:
         return redirect("/")
 
+@app.route("/mentorlistings")
+def mentorlistings(): 
+    email = dict(session).get('email', None)
+    if email:
+        query = "SELECT mentor, description, phone_num, area, latitude, longitude FROM mentors WHERE area = ?;"
+        values = (mentorpreferences.area,)
+        listings = executeReadQuery(db, query, values)
+        viableMentors = []
+        lat1, long1 = mentorpreferences.menteeLat, mentorpreferences.menteeLong
+        for listing in listings:
+            lat2, long2 = listing[4], listing[5]
+            dist = mpu.haversine_distance((lat1, long1), (lat2, long2))
+            tmp = []
+            for i in range(2):
+                tmp.append(listing[i])
+            phone_num = listing[2].split()
+            phone_num = "".join(phone_num)
+            tmp.append(phone_num)
+            if dist >= 1:
+                tmp.append(f"{dist:.1f} km")
+            else:
+                tmp.append(f"{int(dist)} meters")
+            viableMentors.append(tmp)
+
+        return render_template('mentorlistings.html', listings=viableMentors, area=mentorpreferences.area)
+
+    else:
+        return redirect("/")
 
 
 @app.route('/signin')
@@ -203,6 +270,17 @@ def signinpage():
 @app.route('/signup')
 def signuppage():
     return "signup"
+
+@app.route("/processing")
+def processing():
+    listing_id = foodlistings.listing_id
+    query = "UPDATE listings SET availability = 0 WHERE listing_id = ?;"
+    if executeWriteQuery(db, query, listing_id):
+        query = "SELECT phone_num FROM listings WHERE listing_id = ?;"
+        phone_num = executeReadQuery(db, query, listing_id)[0][0]
+        phone_num = phone_num.split()
+        phone_num = "".join(phone_num)
+        return redirect(f"http://wa.me/{phone_num}")
 
 # error handling
 def errorhandler(e):
@@ -215,4 +293,4 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    app.run(debug=False)

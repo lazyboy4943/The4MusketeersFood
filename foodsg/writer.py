@@ -24,7 +24,35 @@ def executeReadQuery(connection, query, placeholders=()):
 
 db = getConnection("feelathomesg.db")
 query = """
-DELETE FROM listings;
+CREATE TABLE IF NOT EXISTS listings (
+    listing_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    seller varchar(300) NOT NULL,
+    description varchar(300) NOT NULL,
+    availability BOOLEAN,
+    rating DECIMAL(2, 1),
+    cuisine varchar(10),
+    veg BOOLEAN,
+    phone_num varchar(150),
+    latitude DECIMAL(20, 17),
+    longitude DECIMAL(20, 17),
+    location varchar(300),
+    email varchar(255)
+);
+"""
+
+print(executeWriteQuery(db, query))
+
+query = """CREATE TABLE IF NOT EXISTS mentors (
+    mentor_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    mentor varchar(300) NOT NULL,
+    description varchar(300) NOT NULL,
+    area varchar(100) NOT NULL,
+    phone_num varchar(150),
+    latitude DECIMAL(20, 17),
+    longitude DECIMAL(20, 17),
+    location varchar(300),
+    email varchar(255)
+);
 """
 
 print(executeWriteQuery(db, query))
@@ -32,4 +60,5 @@ print(executeWriteQuery(db, query))
 # LISTINGS
 # listing_id | seller | description | availability | rating | cuisine | veg | phone_num | latitude | longitude | location | email
 
-# store latitude and longitude in a tuple
+# MENTORS
+# mentor_id | mentor | description | area | phone_num | latitude | longitude | location | email
