@@ -51,7 +51,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-names = ['Prakamya Singh', 'Praneeth Suresh', 'Pratyush Bansal', 'Rahul Rajkumar']
+names = ['name1', 'name2', 'name3', 'name4']
 db = getConnection("feelathomesg.db")
 
 @app.route('/login')
