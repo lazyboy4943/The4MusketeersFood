@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Preferences</title>
+
+    <style>
+    html {
+        height: 95%;
+    }
+    body {
+        height: 95%;
+        margin: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+
+
+    body {
+        min-height: 89;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .banner {
+        position: relative;
+        top: 0%;
+        width: 100%;
+    }
+
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+    body {
+        font-family: 'Work Sans', sans-serif;
+        background: #111;
+        text-align: center;
+    }
+    .signmentor {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+
+    .backtohome {
+        position: absolute;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-right: 20px;
+        top: 0px;
+        right: 0px;
+    }
+
+    .submit {
+        position: ce;
+        width: 150px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding-top: 10px;
+    }
+
+
+
+
+    .button {
+        user-select: none;
+        display: inline-block;
+        border: 0.2em solid;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        opacity: 0.6;
+        color: #fff;
+    }
+    .button__text {
+        display: block;
+        padding: 1em 2em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .button__text:before {
+        content: attr(title);
+    }
+    .button__text--bis {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: translateX(-1em);
+        opacity: 0;
+    }
+    .button__mask {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        transform: translateX(-100%) rotate(45deg);
+        transition: all 0.3s;
+    }
+    .button:hover {
+        opacity: 1;
+    }
+    .button:hover .button__text {
+        animation: fx-text 0.3s ease-out;
+    }
+    .button:hover .button__text--bis {
+        animation: fx-text-bis 0.3s ease-out;
+    }
+    .button:hover .button__mask {
+        animation: fx-mask 0.3s ease-out;
+    }
+    .button:active {
+        opacity: 1;
+        background: white;
+        color: inherit;
+    }
+    @keyframes fx-mask {
+        0% {
+            transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+    @keyframes fx-text {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(1em);
+            opacity: 0;
+        }
+    }
+    @keyframes fx-text-bis {
+        0% {
+            transform: translateX(-1em);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .text {
+        color: #a0a0a0;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    .preferences {
+        color: #e7e7e7;
+    }
+
+
+    body {
+	 background: #111;
+	 color: #e7e7e7;
+	 /*font-family: 'Courier New', monospace;*/
+	 font-size: 15px;
+	 min-height: 100vh;
+    }
+    .center {
+        display: flex;
+    }
+    .radio-group {
+        margin: auto;
+        display: flex;
+    }
+    @media (max-width: 48em) {
+        .radio-group {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+    }
+    .radio-group-label {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+    .radio-label {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+    }
+    @media (max-width: 48em) {
+        .radio-label {
+            display: block;
+            margin: 10px 0;
+        }
+    }
+    .radio-label input {
+        opacity: 0;
+        position: absolute;
+    }
+    .radio-label .inner-label {
+        position: relative;
+        display: inline-block;
+        padding-left: 40px;
+    }
+    .radio-label .inner-label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+        width: 30px;
+        transition: border-bottom 0.5s ease;
+    }
+    .radio-label input:focus ~ .inner-label:before {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    }
+    .radio-label input:checked ~ .inner-label:after {
+        content: '\2713';
+        color: #e7e7e7;
+        position: absolute;
+        font-size: 12px;
+        left: 12px;
+        top: 1px;
+    }
+ 
+
+    </style>
+
+
+
+
+</head>
+<body>
+    <div class = 'banner'>
+        <img src = 'static/img/banner3.png'>
+    </div>
+    <div class="preferences" style="align-content: center;" class="form-control">
+        <form id="getcuisineform" method="post" action='/buy'>
+            <br><br>
+            <div class="center">
+                <div class='radio-group'>
+                  <label class='radio-label'>
+                      <input name='category' type='radio' id='category' value="Assorted" checked='checked'>
+                      <span class='inner-label'>Assorted</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='category' type='radio' id='category' value="Paper Products">
+                      <span class='inner-label'>Books or other paper products</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='category' type='radio' id='category' value="Food">
+                      <span class='inner-label'>Food</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='category' type='radio' id='category' value="Household">
+                      <span class='inner-label'>Household goods</span>
+                  </label>
+              </div>
+              </div>
+              <br>
+              <br>
+              <br>
+            <div class="center">
+                <div class='radio-group'>
+                  <label class='radio-label'>
+                      <input name='usage' type='radio' id='usage' value="new" checked='checked'>
+                      <span class='inner-label'>First-hand/new/barely used</span>
+                  </label>
+                  <label class='radio-label'>
+                      <input name='usage' type='radio' id='usage' value="old">
+                      <span class='inner-label'>Second-hand</span>
+                  </label>
+                </div>
+            </div>
+            <input hidden id="latitude" name="latitude" type="text">
+            <input hidden id="longitude" name="longitude" type="text">
+            <br><br><br> 
+            <div class="submit">
+                <div class="button" value="submit" onclick="submitcuisine()">
+                  <span class="button__mask"></span>
+                  <span class="button__text">Find stuff!</span>
+                  <span class="button__text button__text--bis">Find stuff!</span>
+                </div>
+                <br>
+            </div>
+        </form>
+
+        <div class="backtohome">
+            <div class="button" onClick="location.href='/'">
+              <span class="button__mask"></span>
+              <span class="button__text">Back To Home</span>
+              <span class="button__text button__text--bis">Back To Home</span>
+            </div>
+            <br>
+        </div>
+    </div><br><br><br>    
+    
+    <div class="signmentor">
+        <div class="button" onClick="location.href='/mentorpreferences'">
+          <span class="button__mask"></span>
+          <span class="button__text">Look for a Mentor instead</span>
+          <span class="button__text button__text--bis">Look for a mentor instead</span>
+        </div>
+        <br>
+    </div>
+
+    <br><br><br>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    let buyerlat = position.coords.latitude; // sellerlat is the latitude of the seller
+                    let buyerlong = position.coords.longitude; // sellerlong is the longitude of the seller 
+                    let positionInfo = "Your current position is (Latitude: " + buyerlat + ", Longitude: " + buyerlong + ")";
+                    console.log(positionInfo);
+                    document.querySelector("#latitude").value = buyerlat;
+                    document.querySelector("#longitude").value = buyerlong;
+                    return true;
+                    });
+                } 
+                else {
+                    alert("Sorry, your browser does not support HTML5 geolocation. Please update your browser, or try a different browser");
+                    return false;
+                }
+            })
+        function submitcuisine() {
+            document.getElementById('getcuisineform').submit();
+        }
+    </script>
+</body>
+</html>
