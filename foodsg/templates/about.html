@@ -4,18 +4,15 @@
     About 
 {% endblock %}
 
-{% block extra %}
+{% block body %}
     <div class = 'banner'>
         <img src = 'static/img/banner2.png'>
     </div>
-{% endblock %}
-
-{% block main %}
-    <h1 style="font-weight: bold; color: #e4e4e4">Creators of <span style="color: #444444;">FeelAtHome</span><span style="color:red;">SG</span></h1>
+    <h1 style="font-weight: bold; color: #a4a4a4">Creators of <span style="color: #529bf5;">Uni</span><span style="color:#82b1ea;">C</span></h1>
     {% for name in names %}
         <b><p style="color: #e7e7e7;">{{ name }}</p></b>
     {% endfor %}
-    <h3 style="font-weight: bold; color: #e4e4e4">As part of CodeFiesta 2021 Singapore</h3>
+    <h3 style="font-weight: bold; color: #a4a4a4">As part of Ignite 2021 by Notebook & IIM-Calcutta</h3>
     <div class="wrappersignin" onclick="location.href='/signedin'" style="width: 200px;">
         <div class="button">
             <span class="button__mask"></span>
