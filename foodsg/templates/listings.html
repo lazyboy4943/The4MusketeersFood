@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Food listings
+{% endblock %}
+
+{% block body %}
+    <h1 class="text" style="padding-top: 10px;">Here are some recommendations</h1><br>
+    {% if usage == "new" %}
+        <p class="text">Your choices: {{ category }} (First-hand/new/barely used)</p>
+    {% else %}
+        <p class="text">Your choices: {{ category }}  (Second-hand)</p>
+    {% endif %}
+    <div class="wrappersignup" style="width: 200px;">
+        <div class="button" onClick="location.href='/'">
+          <span class="button__mask"></span>
+          <span class="button__text">Back To Home</span>
+          <span class="button__text button__text--bis">Back To Home</span>
+        </div>
+        <br>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    <script>
+        function clik(listing_id) {
+            listing_id = "id_" + String(listing_id);
+            Swal.fire({
+                icon: 'warning',
+                title: 'Confirm Order?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: `Confirm`,
+                }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    document.getElementById("ordernum").value = listing_id;
+                    document.getElementById("placeorder").submit();
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
+    </script>
+    <main class="container p-5">
+        <div class="row">
+            {% for listing in listings %}
+                <div class="card" style="background-image: url('https://images.unsplash.com/photo-1628626131386-afa54333bc87?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'); height: 200px; margin-bottom: 20px;">
+                    <!--<img src="/static/img/foodlist.png" class="card-img" alt="Food">-->
+                    <div class="card-img-overlay" style="margin: 1px;">
+                        <h4 class="card-text">{{ listing[1] }}</h4>
+                        <p class="card-text">Seller: {{ listing[0] }}</p>
+                        <p class="card-text">{{ listing[2] }}</p>
+                        <p class="card-text">Contact: {{ listing[3] }}</p>
+                        <p class="card-text">Distance from you: {{ listing[4] }}</p>
+                        <div class="placeorderbtn" onclick="clik('{{listing[3]}}'); return false;">
+                            <div class="button">
+                                <span class="button__mask"></span>
+                                <span class="button__text">Place Order</span>
+                                <span class="button__text button__text--bis">Place Order</span>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>    
+                <br><br>
+            {% endfor %}
+            <form action="/foodlistings" id="placeorder" hidden method="post">
+                <input type="text" id="ordernum" hidden name="ordernum">
+            </form>
+        </div>
+    </main>
+{% endblock %}
