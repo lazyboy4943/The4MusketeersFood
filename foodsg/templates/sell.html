@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
     <title>Sell / Host</title>
-
     <style>
-
-
         html {
             height: 95%;
         }
@@ -15,9 +12,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-    
-    
-    
+
         body {
             min-height: 89;
         }
@@ -248,7 +243,6 @@
     <script>
         alert("Success! Your listing has been added")
         window.location = "/";
-        
     </script>
     {% else %} 
     <h1 class="text" style="padding-top: 10px;">Fill in this form to Sell / Host</h1>
@@ -257,44 +251,43 @@
     <form id = 'sellform' method="post">
         <label for="name">Enter your name:</label><br><br>
         <input type="text" id="name" name="name" placeholder="eg: Ty Lee" required><br><br><br>
-        <label for="dishname">Enter the name of the dish:</label><br><br>
-        <input type="text" id="dishname" name="dishname" placeholder="eg: Nasi Lemak" required><br><br><br>
+        <label for="prodname">Enter the name of the product:</label><br><br>
+        <input type="text" id="prodname" name="prodname" placeholder="eg: Calculus textbook" required><br><br><br>
+        <label for="proddesc">A short description(300 characters max):</label><br><br>
+        <textarea id="proddesc" name="proddesc" required></textarea><br><br><br>
         <label for="phone">Enter your phone number (with the country and/or area code):</label><br><br>
         <input type="text" id="phone" name="phone" placeholder="eg: +44 1234 123456" required><br><br><br>
     
-
         <div class="center">
             <div class='radio-group'>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Assorted" checked='checked'>
+                  <input name='category' type='radio' id='category' value="Assorted" checked='checked'>
                   <span class='inner-label'>Assorted</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Chinese">
-                  <span class='inner-label'>Chinese</span>
+                  <input name='category' type='radio' id='category' value="Paper Products">
+                  <span class='inner-label'>Books or other paper products</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Malay">
-                  <span class='inner-label'>Malay</span>
+                  <input name='category' type='radio' id='category' value="Food">
+                  <span class='inner-label'>Food</span>
               </label>
               <label class='radio-label'>
-                  <input name='cuisine' type='radio' id='cuisines' value="Indian">
-                  <span class='inner-label'>Indian</span>
+                  <input name='category' type='radio' id='category' value="Household">
+                  <span class='inner-label'>Household goods</span>
               </label>
-          </div>
-          </div>
-          <br>
-          <br>
-          <br>
+            </div>
+        </div>
+            <br><br><br>
         <div class="center">
           <div class='radio-group'>
               <label class='radio-label'>
-                  <input name='veg' type='radio' id='veg' value="Both" checked='checked'>
-                  <span class='inner-label'>Not Vegetarian</span>
+                  <input name='usage' type='radio' id='usage' value="new" checked='checked'>
+                  <span class='inner-label'>First-hand/new/barely used</span>
               </label>
               <label class='radio-label'>
-                  <input name='veg' type='radio' id='veg' value="Vegetarian">
-                  <span class='inner-label'>Vegetarian</span>
+                  <input name='usage' type='radio' id='usage' value="old">
+                  <span class='inner-label'>Second-hand</span>
               </label>
             </div>
             </div>
@@ -312,30 +305,22 @@
         </div>
     </form>
 
-
     <div class="backtohome">
-
         <div class="button" onClick="location.href='/'">
           <span class="button__mask"></span>
           <span class="button__text">Back To Home</span>
           <span class="button__text button__text--bis">Back To Home</span>
         </div>
-
-
-
     </div>
 
-
     <div class="mentorsign">
-
         <div class="button" onClick="location.href='/signmentor'">
           <span class="button__mask"></span>
           <span class="button__text">Sign up as a mentor isntead?</span>
           <span class="button__text button__text--bis">Sign up as a mentor isntead?</span>
         </div>
-
-
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     <script>
