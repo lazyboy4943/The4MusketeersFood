@@ -22,21 +22,21 @@ def executeReadQuery(connection, query, placeholders=()):
     cursor.execute(query, placeholders)
     return cursor.fetchall()
 
-db = getConnection("feelathomesg.db")
+db = getConnection("/home/lazyboy4943/mysite/feelathomesg.db")
 query = """
 CREATE TABLE IF NOT EXISTS listings (
     listing_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     seller varchar(300) NOT NULL,
+    prodname varchar(100) NOT NULL,
     description varchar(300) NOT NULL,
-    availability BOOLEAN,
-    rating DECIMAL(2, 1),
-    cuisine varchar(10),
-    veg BOOLEAN,
+    category varchar(100) NOT NULL,
+    usage varchar(3) NOT NULL,
     phone_num varchar(150),
     latitude DECIMAL(20, 17),
     longitude DECIMAL(20, 17),
     location varchar(300),
-    email varchar(255)
+    email varchar(255),
+    availability BOOL NOT NULL
 );
 """
 
