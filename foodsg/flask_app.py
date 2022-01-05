@@ -5,40 +5,16 @@ import requests
 from flask_simple_geoip import SimpleGeoIP
 import mpu
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+from authlib.integrations.flask_client import OAuth
 #from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import getConnection, executeWriteQuery, executeReadQuery
 
-
-from authlib.integrations.flask_client import OAuth
-
-import logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-
-app = Flask(__name__)
-app.secret_key = ''
-
-app.config.update(GEOIPIFY_API_KEY='')
-simple_geoip = SimpleGeoIP(app)
-
-
-oauth = OAuth(app)
-google = oauth.register(
-    name='google',
-    client_id = '',
-    client_secret = '',
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    access_token_params=None,
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    authorize_params=None,
-    api_base_url='https://www.googleapis.com/oauth2/v1/',
-    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
-    client_kwargs={'scope': 'openid email profile'},
-)
-
 # configure application, use filesystem insted of cookies, make sure responses aren't cached
 app = Flask(__name__)
+app.secret_key = '5yTuleqqRRdRwvCf'
+app.config.update(GEOIPIFY_API_KEY='at_KIgYTxO7GSB26ukH0av9aCEC2IUCQ')
+simple_geoip = SimpleGeoIP(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 @app.after_request
 def after_request(response):
@@ -50,9 +26,24 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id='400883400079-0mgfa8lv7qco8f9dj1elpg2huv70llcs.apps.googleusercontent.com',
+    client_secret='YLdpERED0IZeD80ZPSZ59qIh',
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
+    client_kwargs={'scope': 'openid email profile'},
+)
 
-names = ['name1', 'name2', 'name3', 'name4']
-db = getConnection("feelathomesg.db")
+names = ["Akshaya Singh", "Prakamya Singh", "Praneeth Suresh", "Pratyush Bansal", "Rahul Rajkumar", "Vishnumaya Praveenraman"]
+db = getConnection("/home/lazyboy4943/mysite/feelathomesg.db")
+global item_choices
+item_choices = []
 
 @app.route('/login')
 def login():
@@ -95,45 +86,42 @@ def signedout():
 @app.route('/logout')
 def logout():
     for key in list(session.keys()):
-        session.pop(key) 
+        session.pop(key)
     return redirect('/')
 
 
 @app.route('/sell', methods=["GET", "POST"])
 def sell():
     email = dict(session).get("email", None)
-    if email: 
+    if email:
         if request.method == "GET":
             return render_template("sell.html")
 
-        cuisine = request.form.get("cuisine")
-        if request.form.get("veg") == "Vegetarian":
-            veg = 1
-        else:
-            veg = 0
+        category = request.form.get("category")
+        usage = request.form.get("usage")
         name = request.form.get("name")
-        dishname = request.form.get("dishname")
+        prodname = request.form.get("prodname")
+        proddesc = request.form.get("proddesc")
         phone = request.form.get("phone")
         latitude = float(request.form.get("latitude"))
         longitude = float(request.form.get("longitude"))
         query = """
-        INSERT INTO listings 
-        (seller, description, cuisine, veg, phone_num, availability, latitude, longitude, email)
-        VALUES (?, ?, ?, ?, ?, 1, ?, ?, ?);
+        INSERT INTO listings
+        (seller, prodname, description, category, usage, phone_num, latitude, longitude, email, availability)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1);
         """
-        print(email)
-        values = tuple((name, dishname, cuisine, veg, phone, latitude, longitude, email))
+        values = tuple((name, prodname, proddesc, category, usage, phone, latitude, longitude, email))
         if executeWriteQuery(db, query, values):
             return render_template("sell.html", sold=True)
-    
+
     else:
         return redirect("/")
-    
+
 
 @app.route('/signmentor', methods=["GET", "POST"])
 def signmentor():
     email = dict(session).get("email", None)
-    if email: 
+    if email:
         if request.method == "GET":
             return render_template("signmentor.html")
 
@@ -151,30 +139,33 @@ def signmentor():
         values = tuple((name, descr, area, phone, latitude, longitude, email))
         if executeWriteQuery(db, query, values):
             return render_template("signmentor.html", registered=True)
-    
+
     else:
         return redirect("/")
 
 
 @app.route("/about")
 def about():
-    return render_template('about.html', names = names)
+    return render_template('about.html', names=names)
 
-@app.route("/foodpreferences", methods=["GET", "POST"])
-def foodpreferences():
+@app.route("/buy", methods=["GET", "POST"])
+def choices():
     email = dict(session).get('email', None)
-
     if email:
-
         if request.method == "GET":
-            return render_template('foodpreferences.html')
+            return render_template('preferences.html')
 
-        foodpreferences.veg = request.form.get("veg")
-        foodpreferences.cuisine = request.form.get("cuisine")   
-        foodpreferences.buyerLat = float(request.form.get("latitude"))
-        foodpreferences.buyerLong = float(request.form.get("longitude"))
-        return redirect("/foodlistings")
-    
+        #global choice_usage
+        choices.usage = (request.form.get("usage"))
+        #global choice_category
+        choices.category = (request.form.get("category"))
+        #global choice_buyerLat
+        choices.lat = (float(request.form.get("latitude")))
+        #global choice_buyerLong
+        choices.long = (float(request.form.get("longitude")))
+        #print(item_choices)
+        return redirect("/listings")
+
     else:
         return redirect("/")
 
@@ -182,35 +173,29 @@ def foodpreferences():
 @app.route("/mentorpreferences", methods=["GET", "POST"])
 def mentorpreferences():
     email = dict(session).get('email', None)
-
     if email:
-
         if request.method == "GET":
             return render_template('mentorpreferences.html')
 
-        mentorpreferences.area = request.form.get("area")   
+        mentorpreferences.area = request.form.get("expertin")
         mentorpreferences.menteeLat = float(request.form.get("latitude"))
         mentorpreferences.menteeLong = float(request.form.get("longitude"))
         return redirect("/mentorlistings")
-    
+
     else:
         return redirect("/")
 
 
-@app.route("/foodlistings", methods=["GET", "POST"])
-def foodlistings(): 
+@app.route("/listings", methods=["GET", "POST"])
+def findlistings():
     email = dict(session).get('email', None)
     if email:
         if request.method == "GET":
-            if foodpreferences.veg == "Vegetarian":
-                veg = 1
-            else:
-                veg = 0
-            query = "SELECT seller, description, phone_num, listing_id, latitude, longitude FROM listings WHERE availability = 1 AND cuisine = ? AND veg = ?"
-            values = tuple((foodpreferences.cuisine, veg))
+            query = "SELECT seller, prodname, description, phone_num, latitude, longitude FROM listings WHERE availability = 1 AND category = ? AND usage = ?"
+            values = tuple((choices.category, choices.usage))
             listings = executeReadQuery(db, query, values)
             viableSellers = []
-            lat1, long1 = foodpreferences.buyerLat, foodpreferences.buyerLong
+            lat1, long1 = choices.lat, choices.long
             for listing in listings:
                 lat2, long2 = listing[4], listing[5]
                 dist = mpu.haversine_distance((lat1, long1), (lat2, long2))
@@ -223,18 +208,17 @@ def foodlistings():
                     else:
                         tmp.append(f"{dist:.1f} meters")
                     viableSellers.append(tmp)
-
-            return render_template('foodlistings.html', listings=viableSellers, cuisine=foodpreferences.cuisine, veg=foodpreferences.veg)
+            return render_template('listings.html', listings=viableSellers, category=choices.category, usage=choices.usage)
 
         else:
-            foodlistings.listing_id = (int(request.form.get("ordernum")[3:]),)
+            findlistings.listing_id = (int(request.form.get("ordernum")[3:]),)
             return redirect("/processing")
 
     else:
         return redirect("/")
 
 @app.route("/mentorlistings")
-def mentorlistings(): 
+def mentorlistings():
     email = dict(session).get('email', None)
     if email:
         query = "SELECT mentor, description, phone_num, area, latitude, longitude FROM mentors WHERE area = ?;"
@@ -273,7 +257,7 @@ def signuppage():
 
 @app.route("/processing")
 def processing():
-    listing_id = foodlistings.listing_id
+    listing_id = findlistings.listing_id
     query = "UPDATE listings SET availability = 0 WHERE listing_id = ?;"
     if executeWriteQuery(db, query, listing_id):
         query = "SELECT phone_num FROM listings WHERE listing_id = ?;"
